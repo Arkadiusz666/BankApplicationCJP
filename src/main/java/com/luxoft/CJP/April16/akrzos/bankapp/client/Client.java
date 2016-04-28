@@ -12,8 +12,10 @@ import java.util.*;
  * Created by akrzos on 2016-04-12.
  */
 public class Client implements ParsingFeeds, Serializable {
+    private static final long serialVersionUID = 4020000988842999258L;
 //    private static int idCounter=0;
 //    private int clientId;
+
     private String name;
     private Set<Account> accounts; //TODO check equality of accounts and properties of the set
     private Account activeAccount;
