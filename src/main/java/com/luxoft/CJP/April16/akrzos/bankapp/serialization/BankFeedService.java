@@ -2,9 +2,7 @@ package com.luxoft.CJP.April16.akrzos.bankapp.serialization;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -19,21 +17,35 @@ public class BankFeedService {
     }
 
     public void loadFeed(String folder) throws IOException {
-        //TODO
-        Map<String,String> map = new TreeMap<String, String>();
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
-        String loadedFeed = ""; //accounttype=c;balance=100;overdraft=50;name=John;gender=f;
+        File directory = new File(folder);
+        File[] listOfFiles = directory.listFiles();
+        for (File file : listOfFiles) {
+            Map<String,String> map = new TreeMap<String, String>();
 
-        fis = new FileInputStream(folder); //TODO this will get only one file - change to wildcard
-        ois = new ObjectInputStream(fis);
-        loadedFeed=ois.readUTF();
+            FileInputStream fis = new FileInputStream(file);
 
-        for (String s : loadedFeed.split(";")) { //loads entries separated by ;
-            String[] temp = s.split("=");
-            map.put(temp[0],temp[1]);
+            //Construct BufferedReader from InputStreamReader
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+
+            String loadedLine = null;
+            while ((loadedLine = br.readLine()) != null) {
+                for (String s : loadedLine.split(";")) { //loads entries separated by ;
+                    String[] temp = s.split("=");
+                    map.put(temp[0],temp[1]);
+                }
+                activeBank.parseFeed(map);
+            }
+
+            br.close();
+
+
+
+
+
         }
 
-        activeBank.parseFeed(map);
+
+        //TODO do it for all teh lines
+
     }
 }
