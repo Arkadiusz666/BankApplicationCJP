@@ -6,8 +6,8 @@ import com.luxoft.CJP.April16.akrzos.bankapp.serialization.ParsingFeeds;
 /**
  * Created by akrzos on 2016-04-12.
  */
-public abstract class AbstractAccount implements Account, ParsingFeeds {
-
+public abstract class AbstractAccount implements Account {
+//TODO implementign parseFeed
     private float balance;
 
     public AbstractAccount(float balance) {

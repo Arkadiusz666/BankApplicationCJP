@@ -12,6 +12,8 @@ public interface BankService {
     void removeClient(Bank bank, Client client);
     void addAccount (Bank bank, Client client, Account account);
     void removeAccount (Bank bank, Client client, Account account);
+    void saveClient (Client client);
+    Client loadClient(); //TODO - should it return anything/should it have argument?
     Client getClient(Bank bank, String clientName);
 
 }

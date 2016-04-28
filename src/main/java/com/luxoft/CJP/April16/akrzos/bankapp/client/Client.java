@@ -1,21 +1,21 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.client;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
+import com.luxoft.CJP.April16.akrzos.bankapp.accounts.CheckingAccount;
+import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Gender;
 import com.luxoft.CJP.April16.akrzos.bankapp.serialization.ParsingFeeds;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Created by akrzos on 2016-04-12.
  */
-public class Client implements ParsingFeeds {
-    private static int idCounter=0;
-    private int clientId;
+public class Client implements ParsingFeeds, Serializable {
+//    private static int idCounter=0;
+//    private int clientId;
     private String name;
-    private Set<Account> accounts;
+    private Set<Account> accounts; //TODO check equality of accounts and properties of the set
     private Account activeAccount;
     private float initialOverdraft;
     private Gender gender;
@@ -25,13 +25,13 @@ public class Client implements ParsingFeeds {
     //constructors
     public Client() {
         accounts = new HashSet<Account>();
-        clientId=idCounter;
-        idCounter++;
+//        clientId=idCounter;
+//        idCounter++;
     }
 
     public Client(Gender gender, String name, String city) {
-        clientId=idCounter;
-        idCounter++;
+//        clientId=idCounter;
+//        idCounter++;
         this.gender = gender;
         this.name = name;
         initialOverdraft = 0;
@@ -132,8 +132,7 @@ public class Client implements ParsingFeeds {
     @Override
     public String toString() {
         return "Client{" +
-                "Id: " +clientId +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", accounts=" + accounts +
                 ", activeAccount=" + activeAccount +
                 ", initialOverdraft=" + initialOverdraft +
@@ -141,7 +140,18 @@ public class Client implements ParsingFeeds {
                 '}';
     }
 
-
+    public void parseFeed(Map<String, String> feed) {
+        Account tempAccount;
+        if (feed.get("accounttype").equals("c")) {
+            tempAccount=new CheckingAccount(Float.parseFloat(feed.get("balance")), Float.parseFloat(feed.get("overdraft")));
+            this.addAccount(tempAccount);
+        }
+        if (feed.get("accounttype").equals("s")) {
+            tempAccount=new SavingAccount(Float.parseFloat(feed.get("balance")));
+            this.addAccount(tempAccount);
+        }
+        //TODO calling parse account seems to be making no sense
+    }
 }
 
 
