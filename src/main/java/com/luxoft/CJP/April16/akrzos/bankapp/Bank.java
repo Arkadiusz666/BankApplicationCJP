@@ -69,18 +69,20 @@ public class Bank implements ParsingFeeds{
     }
 
     public void parseFeed(Map<String, String> feed) {
-        if (clientsByName.containsKey(feed.get("name"))) {
-            return;
-        }
-        //TODO - if client present add account if not present
-        //adding client if not present in the bank
         BankServiceImplementation service = new BankServiceImplementation();
-        Gender tempGender= Gender.MALE;
-        if (feed.get("gender").equals("f")) {
-            tempGender=Gender.FEMALE;
+        Client tempClient;
+
+        //adding client if not present in the bank
+        if (!clientsByName.containsKey(feed.get("name"))) {
+            Gender tempGender= Gender.MALE;
+            if (feed.get("gender").equals("f")) {
+                tempGender=Gender.FEMALE;
+            }
+            tempClient = new Client(tempGender, feed.get("name"), feed.get("city"));//TODO WTF happened with the City?
+            service.addClient(this, tempClient);
+        } else {
+            tempClient=clientsByName.get(feed.get("name"));
         }
-        Client tempClient = new Client(tempGender, feed.get("name"), feed.get("city"));//TODO WTF happened with the City?
-        service.addClient(this, tempClient);
         tempClient.parseFeed(feed); //processing account data
 
 

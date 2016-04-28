@@ -23,7 +23,6 @@ public class Client implements ParsingFeeds, Serializable {
     private Gender gender;
     private String city;
 
-        //TODO finish counstructors
     //constructors
     public Client() {
         accounts = new HashSet<Account>();
@@ -95,11 +94,6 @@ public class Client implements ParsingFeeds, Serializable {
             builder.append(account.toString());
         }
         System.out.println(builder);
-//TODO check this
-//        System.out.println("Assets for " + this.getSalutations() + " " +this.getName() + ":");
-//        for (Account account : accounts) {
-//            account.printReport();
-//        }
     }
 
     public void addAccount(Account account) {
@@ -144,6 +138,7 @@ public class Client implements ParsingFeeds, Serializable {
 
     public void parseFeed(Map<String, String> feed) {
         Account tempAccount;
+        //TODO - check that client have max 1 of each account and confirm if that makes any sense
         if (feed.get("accounttype").equals("c")) {
             tempAccount=new CheckingAccount(Float.parseFloat(feed.get("balance")), Float.parseFloat(feed.get("overdraft")));
             this.addAccount(tempAccount);
@@ -152,7 +147,7 @@ public class Client implements ParsingFeeds, Serializable {
             tempAccount=new SavingAccount(Float.parseFloat(feed.get("balance")));
             this.addAccount(tempAccount);
         }
-        //TODO calling parse account seems to be making no sense
+        //TODO calling parse account seems to be making no sense at this point
     }
 }
 

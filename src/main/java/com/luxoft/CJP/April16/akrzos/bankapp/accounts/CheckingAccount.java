@@ -12,7 +12,6 @@ public class CheckingAccount extends AbstractAccount {
     public CheckingAccount(float balance) {
         super(balance);
         if(balance<0) throw new IllegalArgumentException();
-
         overdraft = 0;
     }
 
