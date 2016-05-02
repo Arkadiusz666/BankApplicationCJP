@@ -69,11 +69,13 @@ public class BankServer {
             oos = new ObjectOutputStream(connection.getOutputStream());
             oos.flush();
             ois = new ObjectInputStream(connection.getInputStream());
-            sendMessage("Connection successful");
             // 4. The two parts communicate via the input and output streams
-
+            //TODO TEST
+            int counter=0;
             BankServerGetResponse responder = new BankServerGetResponse(bank);
             do {
+                System.out.println(counter);
+                 counter++;
                 try {
                     message = (String) ois.readObject();
                     System.out.println(message);

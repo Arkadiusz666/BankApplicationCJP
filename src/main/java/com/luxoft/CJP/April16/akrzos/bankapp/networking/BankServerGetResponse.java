@@ -20,6 +20,10 @@ public class BankServerGetResponse {
         message="";
         //GETCLIENTSLIST|nameregex
         if (command.matches("GETCLIENTSLIST.+")) {
+//            String[] searchStringlist = command.split("\\|");
+//            for (int i = 0; i < searchStringlist.length; i++) {
+//                System.out.println(i+ " "+searchStringlist[i]);
+//            }
             String searchString = command.split("\\|")[1];
             System.out.println("Search string: " + searchString);//TEST
             for (String s : bank.getClientsByName().keySet()) {
@@ -30,8 +34,10 @@ public class BankServerGetResponse {
             if (message.length()>0) {
                 message=message.substring(0,message.length()-1);
             }
-            return message;
+            return "RESPONSE"+message;
         }
+
+        if (command.matches("TEST"))
         //TODO just for testing the connection
         if (command.matches("TEST")) {
             return "TEST";
@@ -46,7 +52,7 @@ public class BankServerGetResponse {
         //WITHDRAW|name|amount|account???
         if (command.matches("WITHDRAW.+")) {
             String name = command.split("\\|")[1];
-            float amount = Float.parseFloat(command.split("|")[2]);
+            float amount = Float.parseFloat(command.split("\\|")[2]);
             //TODO - which account to serve?
             try {
                 bank.getClientsByName().get(name).getActiveAccount().withdraw(amount);
