@@ -1,6 +1,7 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.networking;
 
         import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
+        import com.luxoft.CJP.April16.akrzos.bankapp.helpers.Helper;
 
         import java.io.IOException;
         import java.io.ObjectInputStream;
@@ -20,17 +21,17 @@ public class BankClient {
     ObjectInputStream ois;
     String message;
     static final String SERVER = "localhost";
-
     private List<String> commandList;
     private String activeClient;
     Scanner scanner = new Scanner(System.in);
 
-
     public BankClient() {
         commandList = new ArrayList<String>();
         commandList.add("Set active client");
-        commandList.add("Set active account");
         commandList.add("Withdraw");
+        commandList.add("Set active account");
+//        commandList.add("Get account info"); //TODO implement
+//        commandList.add("Close connection"); //TODO implement
         activeClient=null;
     }
 
@@ -54,36 +55,16 @@ public class BankClient {
                     for (int i = 0; i < commandList.size(); i++) {
                         System.out.println(i+ ") " + commandList.get(i));
                     }
-
                     int choice = scanner.nextInt(); //TODO better choice options
                     if (choice==0) {
-                        searchClient(); //1
+                        searchClient(); //0
                     }
                     if (choice==1) {
-                        if (activeClient==null) {
-                            System.out.println("No active client set!");
-                        } else {
-                            System.out.println("Provide an amount to withdraw:");
-                            int amount = scanner.nextInt();
-                            sendMessage("WITHDRAW|"+activeClient+"|"+amount);
-                            do {
-                                try {
-                                    message = (String) ois.readObject();
-                                } catch (ClassNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                                System.out.println("Message here "+ message);
-                            } while (message.length()<1);
-                            //TODO Test
-
-
-                        }
-
+                        withdrawFromActiveClient(); //1
                     }
-
-
-
-                    System.out.println("1"+ message); //TODO TEST
+                    if (choice==2) {
+                        setActiveAccount();//2
+                    }
                 }
         } catch (UnknownHostException unknownHost) {
             System.err.println("You are trying to connect to an unknown host!");
@@ -105,14 +86,13 @@ public class BankClient {
         try {
             oos.writeObject(msg);
             oos.flush();
-            System.out.println("client>" + msg);
+//            System.out.println("client>" + msg);//TODO TEST
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
     }
 
     void searchClient() {
-        //TODO 1, asking for client list
         System.out.println("Provide client name:");
         String pattern;
         pattern = scanner.nextLine(); //TODO why do I need two of those???
@@ -137,7 +117,6 @@ public class BankClient {
                 System.out.println(i+ ") " + namesList[i]);
             }
 
-
             while (true) {
                 int choice = scanner.nextInt(); //TODO
                 if (choice<0||choice>=namesList.length) {
@@ -152,10 +131,55 @@ public class BankClient {
         }
     }
 
+    public void setActiveAccount() {
+        if (activeClient==null) {
+            System.out.println("No active client set!");
+        } else {
+            sendMessage("GETACCOUNTSLIST|" + activeClient);
+            message=waitForResponse();
+            sendMessage("SETACTIVEACCOUNT|"+activeClient+"|"+Helper.splitAndChoose(message, "ACCOUNTSLIST\\|"));
+            message=waitForResponse();
+            System.out.println(message);
+            Helper.pressAnyKeyToContinue();
+        }
+    }
+
+    public void withdrawFromActiveClient() {
+        if (activeClient==null) {
+            System.out.println("No active client set!");
+        } else {
+            System.out.println("Provide an amount to withdraw:");
+            int amount = scanner.nextInt();
+            sendMessage("WITHDRAW|"+activeClient+"|"+amount);
+            message=waitForResponse();
+
+            System.out.println(message);
+            Helper.pressAnyKeyToContinue();
+        }
+    }
+    public String waitForResponse() {
+        String message="";
+        do {
+            try {
+                message = (String) ois.readObject();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } while (message.length()<1);
+        //TODO TEST
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //TODO TEST
+        return message;
+    }
     public static void main(final String args[]) {
         BankClient client = new BankClient();
         client.run();
     }
-
 }
 

@@ -1,6 +1,7 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.networking;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
+import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
 import com.luxoft.CJP.April16.akrzos.bankapp.exceptions.OverdraftLimitExceededException;
 
 import java.io.IOException;
@@ -61,6 +62,27 @@ public class BankServerGetResponse {
                 e.printStackTrace();
             }
             return "Error while withdrawing";
+        }
+        //GETACCOUNTSLIST|name
+        if ((command.matches("GETACCOUNTSLIST.+"))) {
+            String name = command.split("\\|")[1];
+            String accountsMessage = "ACCOUNTSLIST";
+
+            for (Account account : bank.getClientsByName().get(name).getAccounts()) {
+                accountsMessage+="|"+account.toString();
+            }
+            return accountsMessage;
+        }
+        //SETACTIVEACCOUNT|name|account (to string)
+        if (command.matches("SETACTIVEACCOUNT.+")) {
+            String name = command.split("\\|")[1];
+            String accountName = command.split("\\|")[2];
+            for (Account account : bank.getClientsByName().get(name).getAccounts()) {
+                if (account.toString().equals(accountName)) {
+                    bank.getClientsByName().get(name).setActiveAccount(account);
+                }
+            }
+            return "Active account set: "+accountName;
         }
 
         return "nic";

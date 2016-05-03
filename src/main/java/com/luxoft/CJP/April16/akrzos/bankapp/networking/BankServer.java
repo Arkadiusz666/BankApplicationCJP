@@ -36,6 +36,9 @@ public class BankServer {
         CheckingAccount account3 = new CheckingAccount(144444);
         SavingAccount account11 = new SavingAccount(131321);
         CheckingAccount account12 = new CheckingAccount(-999, 1000);
+        CheckingAccount account13 = new CheckingAccount(-999, 1000);
+        CheckingAccount account14 = new CheckingAccount(-999, 1000);
+        CheckingAccount account15 = new CheckingAccount(-999, 1000);
 
         Client client1 = new Client(Gender.MALE, "Arek Krzos", "Krakow");
         Client client2 = new Client(Gender.MALE, "Roman Gabrys", "Krakow");
@@ -46,6 +49,9 @@ public class BankServer {
         service.addAccount(bank, client1,account1);
         service.addAccount(bank, client1,account11);
         service.addAccount(bank, client1,account12);
+        service.addAccount(bank, client1,account13);
+        service.addAccount(bank, client1,account14);
+        service.addAccount(bank, client1,account15);
         service.addAccount(bank, client2,account2);
         service.addAccount(bank, client3,account3);
 
@@ -70,12 +76,9 @@ public class BankServer {
             oos.flush();
             ois = new ObjectInputStream(connection.getInputStream());
             // 4. The two parts communicate via the input and output streams
-            //TODO TEST
-            int counter=0;
+
             BankServerGetResponse responder = new BankServerGetResponse(bank);
             do {
-                System.out.println(counter);
-                 counter++;
                 try {
                     message = (String) ois.readObject();
                     System.out.println(message);
@@ -84,7 +87,6 @@ public class BankServer {
                 }
                 System.out.println(responder.getResponse(message));
                     sendMessage(responder.getResponse(message));
-//                sendMessage(temp);
 
             } while (!message.equals("Exit"));
         } catch (IOException ioException) {
