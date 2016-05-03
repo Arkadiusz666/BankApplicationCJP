@@ -166,6 +166,7 @@ public class BankClient {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                
             }
         } while (message.length()<1);
         //TODO TEST

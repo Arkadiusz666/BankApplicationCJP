@@ -35,6 +35,14 @@ public class BankServiceImplementation implements BankService {
         client.removeAccount(account);
         //System.out.println("Konto usuniete");
     }
+    public void saveToStream() {
+        //TODO
+        todo
+    }
+    public void loadFromStream() {
+        //TODO
+        todo
+    }
 
     public void saveClient(Client client) {
         FileOutputStream fos = null;
@@ -65,7 +73,6 @@ public class BankServiceImplementation implements BankService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public Client loadClient() {

@@ -35,17 +35,8 @@ public class BankFeedService {
                 }
                 activeBank.parseFeed(map);
             }
-
             br.close();
-
-
-
-
-
         }
-
-
         //TODO do it for all teh lines
-
     }
 }
