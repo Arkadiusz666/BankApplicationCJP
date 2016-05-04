@@ -99,37 +99,32 @@ public class BankClient {
         pattern = scanner.nextLine(); //TODO
 
         sendMessage("GETCLIENTSLIST|" + pattern);
-        do {
-            try {
-                message = (String) ois.readObject();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        } while (!message.matches("RESPONSE.*"));
-//        message=waitForResponse();
-        message=message.substring(8);
-        if (message.length()>0) {
-            String[] namesList;
-            namesList = message.split("\\|");
-            System.out.println("Choose a client:");
-            for (int i = 0; i < namesList.length; i++) {
-                System.out.println(i+ ") " + namesList[i]);
-            }
 
-            while (true) {
-                int choice = scanner.nextInt(); //TODO
-                if (choice<0||choice>=namesList.length) {
-                    System.out.println("Incorrect input");
-                } else {
-                    activeClient=namesList[choice];
-                    break;
-                }
-            }
-        } else {
-            System.out.println("User not found");
-        }
+        message=waitForResponse();
+        message=Helper.splitAndChoose(message, "RESPONSE");
+        System.out.println(message);
+        activeClient=message;
+//        message=message.substring(8);
+//        if (message.length()>0) {
+//            String[] namesList;
+//            namesList = message.split("\\|");
+//            System.out.println("Choose a client:");
+//            for (int i = 0; i < namesList.length; i++) {
+//                System.out.println(i+ ") " + namesList[i]);
+//            }
+//
+//            while (true) {
+//                int choice = scanner.nextInt(); //TODO
+//                if (choice<0||choice>=namesList.length) {
+//                    System.out.println("Incorrect input");
+//                } else {
+//                    activeClient=namesList[choice];
+//                    break;
+//                }
+//            }
+//        } else {
+//            System.out.println("User not found");
+//        }
     }
 
     public void setActiveAccount() {

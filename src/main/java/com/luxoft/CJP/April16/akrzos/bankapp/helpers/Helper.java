@@ -18,20 +18,24 @@ public class Helper {
     public static String splitAndChoose (String delimitedString, String toBeIgnored) {
         String message;
         Scanner scanner = new Scanner(System.in);
-
         message = delimitedString.replaceAll(toBeIgnored, "");
         String[] messageList = message.split("\\|");
         System.out.println("Choose one:");
-        for (int i = 0; i < messageList.length; i++) {
-            System.out.println(i+") " + messageList[i]);
-        }
-        while (true) {
-            int choice = scanner.nextInt(); //TODO
-            if (choice<0||choice>=messageList.length) {
-                System.out.println("Incorrect input");
-            } else {
-                return messageList[choice];
+        if (messageList.length<1 || messageList[0].equals("")) {
+            return "No item found";
+        } else {
+            for (int i = 0; i < messageList.length; i++) {
+                System.out.println(i+") " + messageList[i]);
+            }
+            while (true) {
+                int choice = scanner.nextInt(); //TODO
+                if (choice<0||choice>=messageList.length) {
+                    System.out.println("Incorrect input");
+                } else {
+                    return messageList[choice];
+                }
             }
         }
+
     }
 }

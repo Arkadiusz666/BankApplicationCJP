@@ -38,11 +38,6 @@ public class BankServerGetResponse {
             return "RESPONSE"+message;
         }
 
-        if (command.matches("TEST"))
-        //TODO just for testing the connection
-        if (command.matches("TEST")) {
-            return "TEST";
-        }
         //GET CLIENTSTAT|name
         if (command.matches("CLIENTSTAT.+")) {
             System.out.println("CLIENTSTAT"); //TODO testline
