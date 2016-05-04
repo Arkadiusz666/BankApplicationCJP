@@ -56,8 +56,12 @@ public class BankServerGetResponse {
             float amount = Float.parseFloat(command.split("\\|")[2]);
             //TODO - which account to serve?
             try {
-                bank.getClientsByName().get(name).getActiveAccount().withdraw(amount);
-                return amount +" succesfully withdrawn";
+                if (bank.getClientsByName().get(name).getActiveAccount()==null) {
+                    return "No active account set (most likely client has no accounts)";
+                } else {
+                    bank.getClientsByName().get(name).getActiveAccount().withdraw(amount);
+                    return amount +" succesfully withdrawn";
+                }
             } catch (OverdraftLimitExceededException e) {
                 e.printStackTrace();
             }
@@ -84,6 +88,7 @@ public class BankServerGetResponse {
             }
             return "Active account set: "+accountName;
         }
+        //
 
         return "nic";
     }

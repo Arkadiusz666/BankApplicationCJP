@@ -6,6 +6,7 @@ import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
 import com.luxoft.CJP.April16.akrzos.bankapp.exceptions.OverdraftLimitExceededException;
 
 import java.io.*;
+import java.util.stream.Stream;
 
 /**
  * Created by akrzos on 2016-04-12.
@@ -35,14 +36,14 @@ public class BankServiceImplementation implements BankService {
         client.removeAccount(account);
         //System.out.println("Konto usuniete");
     }
-    public void saveToStream() {
-        //TODO
-        todo
-    }
-    public void loadFromStream() {
-        //TODO
-        todo
-    }
+//    public void saveClientToStream(Client client, ObjectOutputStream oos) {
+//        //TODO
+//        todo
+//    }
+//    public void loadClientFromStream(Client client, ObjectOutputStream oos) {
+//        //TODO
+//        todo
+//    }
 
     public void saveClient(Client client) {
         FileOutputStream fos = null;

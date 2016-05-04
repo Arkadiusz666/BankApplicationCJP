@@ -108,6 +108,7 @@ public class BankClient {
                 e.printStackTrace();
             }
         } while (!message.matches("RESPONSE.*"));
+//        message=waitForResponse();
         message=message.substring(8);
         if (message.length()>0) {
             String[] namesList;
@@ -137,9 +138,13 @@ public class BankClient {
         } else {
             sendMessage("GETACCOUNTSLIST|" + activeClient);
             message=waitForResponse();
-            sendMessage("SETACTIVEACCOUNT|"+activeClient+"|"+Helper.splitAndChoose(message, "ACCOUNTSLIST\\|"));
-            message=waitForResponse();
-            System.out.println(message);
+            if (!message.equals("ACCOUNTSLIST")) {
+                sendMessage("SETACTIVEACCOUNT|" + activeClient + "|" + Helper.splitAndChoose(message, "ACCOUNTSLIST\\|"));
+                message=waitForResponse();
+                System.out.println(message);
+            } else {
+                System.out.println("Client has no accounts");
+            }
             Helper.pressAnyKeyToContinue();
         }
     }

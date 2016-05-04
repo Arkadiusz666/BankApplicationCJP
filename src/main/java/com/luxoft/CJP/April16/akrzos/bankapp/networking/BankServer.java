@@ -45,6 +45,7 @@ public class BankServer {
         Client client3 = new Client(Gender.FEMALE, "Janina Nowak", "Oswiecim");
         Client client4 = new Client(Gender.FEMALE, "Janina Ptak", "Oswiecim");
         Client client5 = new Client(Gender.FEMALE, "Janina Szpak", "Skala");
+        Client client6 = new Client(Gender.FEMALE, "Anna Bieda", "Skala");
 
         service.addAccount(bank, client1,account1);
         service.addAccount(bank, client1,account11);
@@ -60,6 +61,7 @@ public class BankServer {
         service.addClient(bank, client3);
         service.addClient(bank, client4);
         service.addClient(bank, client5);
+        service.addClient(bank, client6);
     }
     
     void run() {
