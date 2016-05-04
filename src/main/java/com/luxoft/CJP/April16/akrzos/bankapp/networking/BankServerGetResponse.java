@@ -3,6 +3,7 @@ package com.luxoft.CJP.April16.akrzos.bankapp.networking;
 import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
 import com.luxoft.CJP.April16.akrzos.bankapp.exceptions.OverdraftLimitExceededException;
+import com.luxoft.CJP.April16.akrzos.bankapp.serialization.BankInfo;
 
 import java.io.IOException;
 
@@ -82,6 +83,12 @@ public class BankServerGetResponse {
                 }
             }
             return "Active account set: "+accountName;
+        }
+        //TODO REMOTE OFFICE COOMANDS
+        //REMOTE_GETBANKINFO
+        if (command.matches("REMOTE_GETBANKINFO.+")) {
+            BankInfo bankInfo = new BankInfo(bank);
+
         }
         //
 

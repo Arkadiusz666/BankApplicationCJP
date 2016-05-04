@@ -5,6 +5,7 @@ import com.luxoft.CJP.April16.akrzos.bankapp.accounts.CheckingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Gender;
+import com.luxoft.CJP.April16.akrzos.bankapp.serialization.BankInfo;
 import com.luxoft.CJP.April16.akrzos.bankapp.services.BankServiceImplementation;
 
 import java.io.IOException;
@@ -51,8 +52,8 @@ public class BankServer {
         service.addAccount(bank, client1,account11);
         service.addAccount(bank, client1,account12);
         service.addAccount(bank, client1,account13);
-        service.addAccount(bank, client1,account14);
-        service.addAccount(bank, client1,account15);
+        service.addAccount(bank, client4,account14);
+        service.addAccount(bank, client5,account15);
         service.addAccount(bank, client2,account2);
         service.addAccount(bank, client3,account3);
 
@@ -78,19 +79,22 @@ public class BankServer {
             oos.flush();
             ois = new ObjectInputStream(connection.getInputStream());
             // 4. The two parts communicate via the input and output streams
-
-            BankServerGetResponse responder = new BankServerGetResponse(bank);
-            do {
-                try {
-                    message = (String) ois.readObject();
-                    System.out.println(message);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(responder.getResponse(message));
-                    sendMessage(responder.getResponse(message));
-
-            } while (!message.equals("Exit"));
+            //TODO if client connected
+            clientServerLoop();
+            //TODO if remote office connected
+            officeServerLoop();
+//            BankServerGetResponse responder = new BankServerGetResponse(bank);
+//            do {
+//                try {
+//                    message = (String) ois.readObject();
+//                    System.out.println(message);
+//                } catch (ClassNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//                System.out.println(responder.getResponse(message));
+//                    sendMessage(responder.getResponse(message));
+//
+//            } while (!message.equals("Exit"));
         } catch (IOException ioException) {
             ioException.printStackTrace();
         } finally {
@@ -104,6 +108,27 @@ public class BankServer {
             }
         }
     }
+    void clientServerLoop() {
+        BankServerGetResponse responder = new BankServerGetResponse(bank);
+            do {
+                try {
+                    try {
+                        message = (String) ois.readObject();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(message);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(responder.getResponse(message));
+                    sendMessage(responder.getResponse(message));
+
+            } while (!message.equals("Exit"));
+    }
+    void officeServerLoop() {
+
+    }
 
     void sendMessage(final String msg) {
         try {
@@ -112,6 +137,14 @@ public class BankServer {
             System.out.println("server>" + msg);
         } catch (IOException ioException) {
             ioException.printStackTrace();
+        }
+    }
+    void sendMessage(BankInfo bankInfo) {
+        try {
+            oos.writeObject(bankInfo);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

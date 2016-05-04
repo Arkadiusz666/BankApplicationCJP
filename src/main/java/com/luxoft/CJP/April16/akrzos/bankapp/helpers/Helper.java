@@ -7,7 +7,7 @@ import java.util.Scanner;
  */
 public class Helper {
     public static void pressAnyKeyToContinue() {
-        System.out.println("Press any key to continue...");
+        System.out.println("Press Enter to continue...");
         try
         {
             System.in.read();
@@ -36,6 +36,5 @@ public class Helper {
                 }
             }
         }
-
     }
 }

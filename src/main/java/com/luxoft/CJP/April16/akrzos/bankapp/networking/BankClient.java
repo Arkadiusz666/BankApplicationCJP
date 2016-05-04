@@ -30,8 +30,6 @@ public class BankClient {
         commandList.add("Set active client");
         commandList.add("Withdraw");
         commandList.add("Set active account");
-//        commandList.add("Get account info"); //TODO implement
-//        commandList.add("Close connection"); //TODO implement
         activeClient=null;
     }
 
@@ -45,27 +43,9 @@ public class BankClient {
             oos.flush();
             ois = new ObjectInputStream(requestSocket.getInputStream());
             // 3: Communicating with the server
-                while(true) {
-                    System.out.print("Active client: ");
-                    if (activeClient==null) {
-                        System.out.println("not set");
-                    } else {
-                        System.out.println(activeClient);
-                    }
-                    for (int i = 0; i < commandList.size(); i++) {
-                        System.out.println(i+ ") " + commandList.get(i));
-                    }
-                    int choice = scanner.nextInt(); //TODO better choice options
-                    if (choice==0) {
-                        searchClient(); //0
-                    }
-                    if (choice==1) {
-                        withdrawFromActiveClient(); //1
-                    }
-                    if (choice==2) {
-                        setActiveAccount();//2
-                    }
-                }
+
+            clientLoop();
+
         } catch (UnknownHostException unknownHost) {
             System.err.println("You are trying to connect to an unknown host!");
         } catch (IOException ioException) {
@@ -82,11 +62,33 @@ public class BankClient {
         }
     }
 
+    void clientLoop() {
+        while(true) {
+            System.out.print("Active client: ");
+            if (activeClient==null) {
+                System.out.println("not set");
+            } else {
+                System.out.println(activeClient);
+            }
+            for (int i = 0; i < commandList.size(); i++) {
+                System.out.println(i+ ") " + commandList.get(i));
+            }
+            int choice = scanner.nextInt(); //TODO better choice options
+            if (choice==0) {
+                searchClient(); //0
+            }
+            if (choice==1) {
+                withdrawFromActiveClient(); //1
+            }
+            if (choice==2) {
+                setActiveAccount();//2
+            }
+        }
+    }
     void sendMessage(final String msg) {
         try {
             oos.writeObject(msg);
             oos.flush();
-//            System.out.println("client>" + msg);//TODO TEST
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -95,8 +97,8 @@ public class BankClient {
     void searchClient() {
         System.out.println("Provide client name:");
         String pattern;
-        pattern = scanner.nextLine(); //TODO why do I need two of those???
-        pattern = scanner.nextLine(); //TODO
+        scanner.nextLine(); //scanning int did not go to next line
+        pattern = scanner.nextLine();
 
         sendMessage("GETCLIENTSLIST|" + pattern);
 
@@ -104,27 +106,6 @@ public class BankClient {
         message=Helper.splitAndChoose(message, "RESPONSE");
         System.out.println(message);
         activeClient=message;
-//        message=message.substring(8);
-//        if (message.length()>0) {
-//            String[] namesList;
-//            namesList = message.split("\\|");
-//            System.out.println("Choose a client:");
-//            for (int i = 0; i < namesList.length; i++) {
-//                System.out.println(i+ ") " + namesList[i]);
-//            }
-//
-//            while (true) {
-//                int choice = scanner.nextInt(); //TODO
-//                if (choice<0||choice>=namesList.length) {
-//                    System.out.println("Incorrect input");
-//                } else {
-//                    activeClient=namesList[choice];
-//                    break;
-//                }
-//            }
-//        } else {
-//            System.out.println("User not found");
-//        }
     }
 
     public void setActiveAccount() {
