@@ -8,6 +8,13 @@ public class BankServerMonitor implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Clients in queue: " + queuedClients);
+        while (true) {
+            System.out.println("Clients in queue: " + queuedClients);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -31,7 +31,10 @@ public class BankServer {
     public BankServer(int portNumber) {
         this.portNumber = portNumber;
     }
-
+//TODO CHECK IF NEEDED
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
     void initialize() {
         bank = new Bank("UBS");
 
