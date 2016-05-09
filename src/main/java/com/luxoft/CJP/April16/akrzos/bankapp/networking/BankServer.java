@@ -24,9 +24,14 @@ public class BankServer {
     ObjectOutputStream oos;
     ObjectInputStream ois;
     String message;
+    int portNumber;
 
     Bank bank; //TODO fill with data, check if can be placed elsewhere
-    
+
+    public BankServer(int portNumber) {
+        this.portNumber = portNumber;
+    }
+
     void initialize() {
         bank = new Bank("UBS");
 
@@ -68,7 +73,7 @@ public class BankServer {
     void run() {
         try {
             // 1. creating a server socket
-            serverSocket = new ServerSocket(2004, 10);
+            serverSocket = new ServerSocket(portNumber, 10);
             // 2. Wait for connection
             System.out.println("Waiting for connection");
             connection = serverSocket.accept();
@@ -149,10 +154,11 @@ public class BankServer {
     }
 
     public static void main(final String args[]) {
-        BankServer server = new BankServer();
+        BankServer server = new BankServer(2002);
         server.initialize();
+        server.run();
+
         while (true) {
-            server.run();
         }
     }
 }

@@ -175,7 +175,7 @@ public class BankRemoteOffice {
         return message;
     }
     public static void main(final String args[]) {
-        BankClient client = new BankClient();
+        BankClient client = new BankClient(2002);
         client.run();
     }
 }

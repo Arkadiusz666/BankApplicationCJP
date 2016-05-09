@@ -24,19 +24,22 @@ public class BankClient {
     private List<String> commandList;
     private String activeClient;
     Scanner scanner = new Scanner(System.in);
+    int portNumber;
 
-    public BankClient() {
+    public BankClient(int portNumber) {
         commandList = new ArrayList<String>();
         commandList.add("Set active client");
         commandList.add("Withdraw");
         commandList.add("Set active account");
         activeClient=null;
+
+        this.portNumber=portNumber;
     }
 
     void run() {
         try {
             // 1. creating a socket to connect to the server
-            requestSocket = new Socket(SERVER, 2004);
+            requestSocket = new Socket(SERVER, portNumber);
             System.out.println("Connected to localhost is port 2004");
             // 2. get Input and Output streams
             oos = new ObjectOutputStream(requestSocket.getOutputStream());
@@ -160,7 +163,7 @@ public class BankClient {
         return message;
     }
     public static void main(final String args[]) {
-        BankClient client = new BankClient();
+        BankClient client = new BankClient(2002);
         client.run();
     }
 }
