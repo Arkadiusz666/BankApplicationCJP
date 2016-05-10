@@ -18,7 +18,7 @@ import java.util.Scanner;
 /**
  * Created by arkad_000 on 2016-04-28.
  */
-public class BankServer {
+public class BankServer implements Runnable{
     ServerSocket serverSocket;
     Socket connection = null;
     ObjectOutputStream oos;
@@ -41,13 +41,13 @@ public class BankServer {
         BankServiceImplementation service = new BankServiceImplementation();
 
         CheckingAccount account1 = new CheckingAccount(10000, 100);
-        CheckingAccount account2 = new CheckingAccount(299, 200);
+        CheckingAccount account2 = new CheckingAccount(2991, 200);
         CheckingAccount account3 = new CheckingAccount(144444);
         SavingAccount account11 = new SavingAccount(131321);
-        CheckingAccount account12 = new CheckingAccount(-999, 1000);
-        CheckingAccount account13 = new CheckingAccount(-999, 1000);
-        CheckingAccount account14 = new CheckingAccount(-999, 1000);
-        CheckingAccount account15 = new CheckingAccount(-999, 1000);
+        CheckingAccount account12 = new CheckingAccount(-1, 1000);
+        CheckingAccount account13 = new CheckingAccount(999, 1000);
+        CheckingAccount account14 = new CheckingAccount(11999, 1000);
+        CheckingAccount account15 = new CheckingAccount(3333, 1000);
 
         Client client1 = new Client(Gender.MALE, "Arek Krzos", "Krakow");
         Client client2 = new Client(Gender.MALE, "Roman Gabrys", "Krakow");
@@ -73,7 +73,7 @@ public class BankServer {
         service.addClient(bank, client6);
     }
     
-    void run() {
+    public void run() {
         try {
             // 1. creating a server socket
             serverSocket = new ServerSocket(portNumber, 10);

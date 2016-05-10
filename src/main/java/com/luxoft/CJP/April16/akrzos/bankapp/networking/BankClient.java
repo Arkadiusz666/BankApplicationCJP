@@ -24,24 +24,21 @@ public class BankClient {
     private List<String> commandList;
     private String activeClient;
     Scanner scanner = new Scanner(System.in);
-    int portNumber;
 
-    public BankClient(int portNumber) {
+    public BankClient() {
         commandList = new ArrayList<String>();
         commandList.add("Set active client");
         commandList.add("Withdraw");
         commandList.add("Set active account");
         commandList.add("Exit");
         activeClient=null;
-
-        this.portNumber=portNumber;
     }
 
     void run() {
         try {
             // 1. creating a socket to connect to the server
-            requestSocket = new Socket(SERVER, portNumber);
-            System.out.println("Connected to localhost is port 2004");
+            requestSocket = new Socket(SERVER, 2002);
+            System.out.println("Connected to localhost is port 2002");
             // 2. get Input and Output streams
             oos = new ObjectOutputStream(requestSocket.getOutputStream());
             oos.flush();
@@ -49,6 +46,39 @@ public class BankClient {
             // 3: Communicating with the server
 
             clientLoop();
+
+        } catch (UnknownHostException unknownHost) {
+            System.err.println("You are trying to connect to an unknown host!");
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        } finally {
+            // 4: Closing connection
+            try {
+                ois.close();
+                oos.close();
+                requestSocket.close();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+    }
+
+    //TODO test
+    void autoRun() {
+        try {
+            // 1. creating a socket to connect to the server
+            requestSocket = new Socket(SERVER, 2002);
+            System.out.println("Connected to localhost is port 2004");
+            // 2. get Input and Output streams
+            oos = new ObjectOutputStream(requestSocket.getOutputStream());
+            oos.flush();
+            ois = new ObjectInputStream(requestSocket.getInputStream());
+            // 3: Communicating with the server
+
+            //TODO
+            activeClient="Arek Krzos";
+            withdrawFromActiveClient(1);
+            closeConnection();
 
         } catch (UnknownHostException unknownHost) {
             System.err.println("You are trying to connect to an unknown host!");
@@ -96,6 +126,7 @@ public class BankClient {
 
     private void closeConnection() {
         sendMessage("EXIT");
+        System.out.println("Connection closed");
         //TODO
     }
 
@@ -145,12 +176,14 @@ public class BankClient {
         } else {
             System.out.println("Provide an amount to withdraw:");
             int amount = scanner.nextInt();
-            sendMessage("WITHDRAW|"+activeClient+"|"+amount);
-            message=waitForResponse();
-
-            System.out.println(message);
-            Helper.pressAnyKeyToContinue();
+            withdrawFromActiveClient(amount);
         }
+    }
+    public void withdrawFromActiveClient(int amount) {
+        sendMessage("WITHDRAW|"+activeClient+"|"+amount);
+        message=waitForResponse();
+        System.out.println(message);
+//        Helper.pressAnyKeyToContinue();
     }
     public String waitForResponse() {
         String message="";
@@ -174,8 +207,9 @@ public class BankClient {
         return message;
     }
     public static void main(final String args[]) {
-        BankClient client = new BankClient(2002);
-        client.run();
+        BankClient client = new BankClient();
+        client.autoRun();//TODO test
+//        client.run();//TODO test recover
     }
 }
 
