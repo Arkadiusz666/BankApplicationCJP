@@ -31,6 +31,7 @@ public class BankClient {
         commandList.add("Set active client");
         commandList.add("Withdraw");
         commandList.add("Set active account");
+        commandList.add("Exit");
         activeClient=null;
 
         this.portNumber=portNumber;
@@ -86,8 +87,18 @@ public class BankClient {
             if (choice==2) {
                 setActiveAccount();//2
             }
+            if (choice==3) {
+                closeConnection();//3
+                break;
+            }
         }
     }
+
+    private void closeConnection() {
+        sendMessage("EXIT");
+        //TODO
+    }
+
     void sendMessage(final String msg) {
         try {
             oos.writeObject(msg);

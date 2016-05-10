@@ -132,10 +132,10 @@ public class BankServer {
                 System.out.println(responder.getResponse(message));
                     sendMessage(responder.getResponse(message));
 
-            } while (!message.equals("Exit"));
+            } while (!message.equals("EXIT"));
     }
     void officeServerLoop() {
-
+//TODO
     }
 
     void sendMessage(final String msg) {
@@ -159,9 +159,11 @@ public class BankServer {
     public static void main(final String args[]) {
         BankServer server = new BankServer(2002);
         server.initialize();
-        server.run();
 
         while (true) {
+            //TODO - check if the loop is needed
+            server.run();
+
         }
     }
 }
