@@ -71,6 +71,7 @@ public class BankServerThreaded {
     void run() {
         try {
             serverSocket = new ServerSocket(2002, 10);
+
             System.out.println("Waiting for connection");
 
             connection = serverSocket.accept();
