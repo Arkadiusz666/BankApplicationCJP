@@ -74,8 +74,10 @@ public class BankServerThreaded {
 
             System.out.println("Waiting for connection");
 
-            connection = serverSocket.accept();
-            pool.execute(new ServerThread(connection, bank, service));
+                while (true) { //TODO should have flag???
+                    connection = serverSocket.accept();
+                    pool.execute(new ServerThread(connection, bank, service));
+                }
 
         } catch (IOException ioException) {
             ioException.printStackTrace();

@@ -6,27 +6,26 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by akrzos on 2016-05-09.
  */
 public class BankServerMonitor implements Runnable {
-    private AtomicInteger queuedClients;
 
-    public BankServerMonitor(AtomicInteger queuedClients) {
-        this.queuedClients = queuedClients;
-    }
 
     @Override
     public void run() {
         while (true) {
-            System.out.println("Clients in queue: " + queuedClients);
+
+            System.out.println("Clients in queue: " + ServerThread.getConnectionsCounter());
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
-    synchronized public void incrementCounter() { //TODO - check if synch is needed here
-        queuedClients.incrementAndGet();
+
+    public static void main(String[] args) {
+        while (true) {
+            BankServerMonitor monitor = new BankServerMonitor();
+            monitor.run();
+        }
     }
-    synchronized public void decrementCounter() { //TODO - check if synch is needed here
-        queuedClients.decrementAndGet();
-    }
+
 }

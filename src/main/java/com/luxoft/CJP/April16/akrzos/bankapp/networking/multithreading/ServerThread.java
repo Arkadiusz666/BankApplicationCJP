@@ -30,6 +30,10 @@ public class ServerThread implements Runnable{
         this.bankService = bankService;
     }
 
+    public static int getConnectionsCounter() {
+        return connectionsCounter.get();
+    }
+
     public void run() {
         System.out.println("Connection received from "
                 + connection.getInetAddress().getHostName());

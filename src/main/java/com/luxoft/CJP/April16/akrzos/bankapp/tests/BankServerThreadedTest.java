@@ -16,25 +16,20 @@ import static org.junit.Assert.*;
  * Created by arkad_000 on 2016-05-10.
  */
 public class BankServerThreadedTest {
-    ExecutorService pool = Executors.newFixedThreadPool(50);
+    ExecutorService pool = Executors.newFixedThreadPool(500);
     @Test
     public void testConnections() throws Exception {
         Thread.sleep(100);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 8000; i++) {
             Thread.sleep(1);
-
             pool.execute(new BankClientBot());
             Thread.sleep(1);
 
         }
-        Thread.sleep(1000);
-
+        Thread.sleep(100);
 
 //        for (int i = 0; i < 100 ; i++) {
 ////            client.run();//TODO test
 //        }
-
     }
-
-
 }
