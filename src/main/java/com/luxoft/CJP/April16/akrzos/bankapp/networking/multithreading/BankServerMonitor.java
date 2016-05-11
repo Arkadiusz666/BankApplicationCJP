@@ -8,6 +8,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BankServerMonitor implements Runnable {
     private AtomicInteger queuedClients;
 
+    public BankServerMonitor(AtomicInteger queuedClients) {
+        this.queuedClients = queuedClients;
+    }
+
     @Override
     public void run() {
         while (true) {
