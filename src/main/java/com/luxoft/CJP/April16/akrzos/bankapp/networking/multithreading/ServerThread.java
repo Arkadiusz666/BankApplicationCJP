@@ -68,8 +68,8 @@ public class ServerThread implements Runnable{
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            System.out.println(responder.getResponse(message));
-            sendMessage(responder.getResponse(message));
+            String response = responder.getResponse(message);
+            sendMessage(response);
 
         } while (!message.equals("EXIT"));
     }

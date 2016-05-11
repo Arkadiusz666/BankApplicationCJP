@@ -90,19 +90,8 @@ public class BankServer implements Runnable{
             //TODO if client connected
             clientServerLoop();
             //TODO if remote office connected
-            officeServerLoop();
-//            BankServerGetResponse responder = new BankServerGetResponse(bank);
-//            do {
-//                try {
-//                    message = (String) ois.readObject();
-//                    System.out.println(message);
-//                } catch (ClassNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//                System.out.println(responder.getResponse(message));
-//                    sendMessage(responder.getResponse(message));
-//
-//            } while (!message.equals("Exit"));
+//            officeServerLoop();
+
         } catch (IOException ioException) {
             ioException.printStackTrace();
         } finally {
@@ -129,8 +118,8 @@ public class BankServer implements Runnable{
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                System.out.println(responder.getResponse(message));
-                    sendMessage(responder.getResponse(message));
+                String response = responder.getResponse(message);
+                    sendMessage(response);
 
             } while (!message.equals("EXIT"));
     }

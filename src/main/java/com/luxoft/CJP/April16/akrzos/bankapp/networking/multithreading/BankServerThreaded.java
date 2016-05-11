@@ -5,8 +5,6 @@ import com.luxoft.CJP.April16.akrzos.bankapp.accounts.CheckingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Gender;
-import com.luxoft.CJP.April16.akrzos.bankapp.networking.BankServerGetResponse;
-import com.luxoft.CJP.April16.akrzos.bankapp.serialization.BankInfo;
 import com.luxoft.CJP.April16.akrzos.bankapp.services.BankServiceImplementation;
 
 import java.io.IOException;
@@ -24,7 +22,7 @@ public class BankServerThreaded {
     final int POOL_SIZE = 10;
 
 //    ServerSocket serverSocket = new ServerSocket(PORT);
-    ExecutorService pool = Executors.newFixedThreadPool(5);
+    ExecutorService pool = Executors.newFixedThreadPool(500);
     ServerSocket serverSocket;
     Socket connection = null;
     ObjectOutputStream oos;
@@ -42,7 +40,7 @@ public class BankServerThreaded {
         CheckingAccount account3 = new CheckingAccount(144444);
         SavingAccount account11 = new SavingAccount(131321);
         CheckingAccount account12 = new CheckingAccount(999, 1000);
-        CheckingAccount account13 = new CheckingAccount(44449, 100000);
+        CheckingAccount account13 = new CheckingAccount(10000, 0);
         CheckingAccount account14 = new CheckingAccount(999, 10000);
         CheckingAccount account15 = new CheckingAccount(-999, 10000);
 
@@ -83,7 +81,6 @@ public class BankServerThreaded {
         } finally {
             // 4: Closing connection
             try {
-
                 serverSocket.close();
             } catch (IOException ioException) {
                 ioException.printStackTrace();

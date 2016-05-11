@@ -14,11 +14,11 @@ public class BankServerGetResponse {
     private Bank bank;
     private String message;
 
-    public BankServerGetResponse(Bank bank) {
+    public  BankServerGetResponse(Bank bank) {
         this.bank = bank;
     }
 
-    public String getResponse(String command) {
+    public synchronized String getResponse(String command) {
         message="";
         //GETCLIENTSLIST|nameregex
         if (command.matches("GETCLIENTSLIST.+")) {

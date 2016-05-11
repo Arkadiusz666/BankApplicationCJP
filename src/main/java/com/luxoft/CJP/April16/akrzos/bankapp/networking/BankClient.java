@@ -15,15 +15,15 @@ package com.luxoft.CJP.April16.akrzos.bankapp.networking;
 /**
  * Created by arkad_000 on 2016-04-28.
  */
-public class BankClient {
-    Socket requestSocket;
-    ObjectOutputStream oos;
-    ObjectInputStream ois;
-    String message;
-    static final String SERVER = "localhost";
-    private List<String> commandList;
-    private String activeClient;
-    Scanner scanner = new Scanner(System.in);
+public class BankClient extends Thread{
+    protected Socket requestSocket;
+    protected ObjectOutputStream oos;
+    protected ObjectInputStream ois;
+    protected String message;
+    protected static final String SERVER = "localhost";
+    protected List<String> commandList;
+    protected String activeClient;
+    protected Scanner scanner = new Scanner(System.in);
 
     public BankClient() {
         commandList = new ArrayList<String>();
@@ -34,7 +34,7 @@ public class BankClient {
         activeClient=null;
     }
 
-    void run() {
+    public void run() {
         try {
             // 1. creating a socket to connect to the server
             requestSocket = new Socket(SERVER, 2002);
@@ -64,39 +64,8 @@ public class BankClient {
     }
 
     //TODO test
-    void autoRun() {
-        try {
-            // 1. creating a socket to connect to the server
-            requestSocket = new Socket(SERVER, 2002);
-            System.out.println("Connected to localhost is port 2004");
-            // 2. get Input and Output streams
-            oos = new ObjectOutputStream(requestSocket.getOutputStream());
-            oos.flush();
-            ois = new ObjectInputStream(requestSocket.getInputStream());
-            // 3: Communicating with the server
 
-            //TODO
-            activeClient="Arek Krzos";
-            withdrawFromActiveClient(1);
-            closeConnection();
-
-        } catch (UnknownHostException unknownHost) {
-            System.err.println("You are trying to connect to an unknown host!");
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        } finally {
-            // 4: Closing connection
-            try {
-                ois.close();
-                oos.close();
-                requestSocket.close();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        }
-    }
-
-    void clientLoop() {
+    public void clientLoop() {
         while(true) {
             System.out.print("Active client: ");
             if (activeClient==null) {
@@ -124,13 +93,13 @@ public class BankClient {
         }
     }
 
-    private void closeConnection() {
+    public void closeConnection() {
         sendMessage("EXIT");
         System.out.println("Connection closed");
         //TODO
     }
 
-    void sendMessage(final String msg) {
+    public void sendMessage(final String msg) {
         try {
             oos.writeObject(msg);
             oos.flush();
@@ -139,7 +108,7 @@ public class BankClient {
         }
     }
 
-    void searchClient() {
+    public void searchClient() {
         System.out.println("Provide client name:");
         String pattern;
         scanner.nextLine(); //scanning int did not go to next line
@@ -208,8 +177,7 @@ public class BankClient {
     }
     public static void main(final String args[]) {
         BankClient client = new BankClient();
-        client.autoRun();//TODO test
-//        client.run();//TODO test recover
+        client.run();
     }
 }
 

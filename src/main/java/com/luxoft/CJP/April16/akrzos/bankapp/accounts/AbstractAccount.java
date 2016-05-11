@@ -25,7 +25,7 @@ public abstract class AbstractAccount implements Account {
             System.out.println("Unable to deposit negative amount");
     }
 
-    public void withdraw(float amount) throws OverdraftLimitExceededException {
+    public synchronized void withdraw(float amount) throws OverdraftLimitExceededException {
         if (amount>balance) {
             System.out.println("Insufficient funds!");
             System.out.println("Current balance: " +  balance);
