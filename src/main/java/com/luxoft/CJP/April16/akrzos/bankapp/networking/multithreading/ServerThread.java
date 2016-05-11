@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by akrzos on 2016-05-09.
  */
 public class ServerThread implements Runnable{
-    private static AtomicInteger connectionsCounter = new AtomicInteger(0); //atomic?
+    public static AtomicInteger connectionsCounter = new AtomicInteger(0); //atomic?
     private  Socket connection;
     private  Bank bank;
     private  BankService bankService;
@@ -24,14 +24,14 @@ public class ServerThread implements Runnable{
 
     public ServerThread(Socket connection, Bank bank, BankService bankService) {
         this.connection = connection;
-
         connectionsCounter.incrementAndGet();
+
         this.bank = bank;
         this.bankService = bankService;
     }
 
     public static int getConnectionsCounter() {
-        return connectionsCounter.get();
+        return connectionsCounter.intValue();
     }
 
     public void run() {
