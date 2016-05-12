@@ -13,12 +13,16 @@ public class CheckingAccount extends AbstractAccount {
         super(balance);
         if(balance<0) throw new IllegalArgumentException();
         overdraft = 0;
+//        accountId=idCounter;
+//        idCounter++;
     }
 
     public CheckingAccount(float balance, float overdraft) {
         super(balance);
         this.overdraft = overdraft;
         if(balance<-overdraft) throw new IllegalArgumentException();
+//        accountId=idCounter;
+//        idCounter++;
     }
 
     public void setOverdraft(float overdraft) {

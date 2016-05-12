@@ -24,12 +24,18 @@ public class Bank implements ParsingFeeds{
     private Set<Client> clients;
     private ClientRegistrationListener[] listeners = {new PrintClientListener(), new EmailNotificationListener(), new PrintClientListener()};
     private Map<String, Client> clientsByName;
+//    private static int idCounter=0;
+    private int bankId;
 
     public Bank(String name) {
         this.name=name;
 //        clients = new LinkedList<Client>(); //deprecated in EX5
         clients = new HashSet<Client>();
         clientsByName = new HashMap<String, Client>();
+    }
+
+    public void setBankId(int bankId) {
+        this.bankId = bankId;
     }
 
     public void printReport() {

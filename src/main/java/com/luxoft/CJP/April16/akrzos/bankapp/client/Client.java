@@ -14,7 +14,7 @@ import java.util.*;
 public class Client implements ParsingFeeds, Serializable {
     private static final long serialVersionUID = 4020000988842999258L;
 //    private static int idCounter=0;
-//    private int clientId;
+    private int clientId;
 
     private String name;
     private Set<Account> accounts; //TODO check equality of accounts and properties of the set
@@ -40,6 +40,10 @@ public class Client implements ParsingFeeds, Serializable {
         this.city=city;
         //TODO phone no
         //TODO email adress
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
 
     public Gender getGender() {

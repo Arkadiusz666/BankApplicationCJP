@@ -7,10 +7,11 @@ import com.luxoft.CJP.April16.akrzos.bankapp.accounts.AbstractAccount;
  */
 public class SavingAccount extends AbstractAccount {
 
-
     public SavingAccount(float balance) {
         super(balance);
         if(balance<0) throw new IllegalArgumentException();
+//        accountId=idCounter;
+//        idCounter++;
     }
 
 

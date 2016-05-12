@@ -9,9 +9,17 @@ import com.luxoft.CJP.April16.akrzos.bankapp.serialization.ParsingFeeds;
 public abstract class AbstractAccount implements Account {
 //TODO implementign parseFeed
     private float balance;
+//    protected static int idCounter=1;
+    protected int accountId;
 
     public AbstractAccount(float balance) {
         this.balance = balance;
+//        accountId=idCounter;
+//        idCounter++;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
     public float getBalance() {
