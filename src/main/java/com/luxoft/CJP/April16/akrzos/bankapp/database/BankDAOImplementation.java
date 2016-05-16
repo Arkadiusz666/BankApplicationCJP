@@ -4,7 +4,6 @@ import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.BankNotFoundException;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.DAOException;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.interfaces.BankDAO;
-import com.sun.corba.se.pept.transport.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
