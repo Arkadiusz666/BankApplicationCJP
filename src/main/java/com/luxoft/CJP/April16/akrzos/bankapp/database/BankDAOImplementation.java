@@ -14,10 +14,9 @@ import java.sql.SQLException;
  */
 public class BankDAOImplementation extends BaseDAOImplementation implements BankDAO {
 
-    @Override
     public Bank getBankByName(String name) throws DAOException, BankNotFoundException {
         Bank bank = new Bank(name);
-        String sql = "SELECT ID, NAME FROM BANK WHERE name=?";
+        String sql = "SELECT ID, NAME FROM BANK WHERE NAME=?";
         PreparedStatement stmt;
         try {
             openConnection();
@@ -39,19 +38,42 @@ public class BankDAOImplementation extends BaseDAOImplementation implements Bank
         return bank;
     }
 
-    @Override
     public void save(Bank bank) throws DAOException {
+        String bankName = bank.getName();
+        String sql = "INSERT INTO BANK VALUES (NULL, ?)";
+        PreparedStatement stmt;
+            openConnection();
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, bankName);
+            ResultSet rs = stmt.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+
+
 
     }
 
-    @Override
     public void remove(Bank bank) throws DAOException {
 
     }
 
     public static void main(String[] args) {
         BankDAOImplementation bankdao = new BankDAOImplementation();
-        bankdao.getBankByName()
+        Bank bank = new Bank("Moj nowy bank kurde");
+        try {
+            bankdao.save(bank);
+            bankdao.getBankByName("UBS");
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } catch (BankNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

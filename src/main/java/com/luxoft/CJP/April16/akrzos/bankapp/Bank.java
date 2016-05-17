@@ -38,6 +38,10 @@ public class Bank implements ParsingFeeds{
         this.bankId = bankId;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void printReport() {
         System.out.println("Bank assets:");
         for (Client client : clients) {
