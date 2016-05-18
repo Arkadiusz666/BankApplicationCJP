@@ -1,13 +1,15 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.database;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
+import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
+import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.BankNotFoundException;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.DAOException;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.interfaces.AccountDAO;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.interfaces.BankDAO;
+import com.luxoft.CJP.April16.akrzos.bankapp.helpers.Helper;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by akrzos on 2016-05-12.
@@ -39,41 +41,73 @@ public class BankDAOImplementation extends BaseDAOImplementation implements Bank
     }
 
     public void save(Bank bank) throws DAOException {
-        String bankName = bank.getName();
-        String sql = "INSERT INTO BANK VALUES (NULL, ?)";
+        //TODO cascade users as well
+        String sql = "INSERT INTO BANK (NAME) VALUES(?)";
         PreparedStatement stmt;
-            openConnection();
         try {
+            openConnection();
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, bankName);
-            ResultSet rs = stmt.executeQuery();
-
+            stmt.setString(1, bank.getName());
+            stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DAOException();
         } finally {
-            closeConnection();
         }
-
-
-
-
+        closeConnection();
     }
 
     public void remove(Bank bank) throws DAOException {
+        String sql = "DELETE FROM BANK WHERE NAME=?";
+        PreparedStatement stmt;
+        try {
+            openConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, bank.getName());
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DAOException();
+        } finally {
+        }
+        closeConnection();
 
     }
 
     public static void main(String[] args) {
         BankDAOImplementation bankdao = new BankDAOImplementation();
-        Bank bank = new Bank("Moj nowy bank kurde");
+        Bank bank = Helper.generateBank();
+
+        BankDAO bankDAO = new BankDAOImplementation();
+        AccountDAO accountDAO = new AccountDAOImplementation();
+
         try {
-            bankdao.save(bank);
-            bankdao.getBankByName("UBS");
+            bankDAO.save(bank);
+            for (Client client : bank.getClients()) {
+                for (Account account : client.getAccounts()) {
+                    accountDAO.save(account, client);
+                }
+            }
         } catch (DAOException e) {
             e.printStackTrace();
-        } catch (BankNotFoundException e) {
-            e.printStackTrace();
         }
+
+
+
+//        DBInitializer initializer = new DBInitializer();
+//        initializer.deinitialize();
+//        initializer.initialize();
+
+
+//        try {
+////            bankdao.getBankByName("UBS");
+//            bankdao.save(bank);
+//            bankdao.save(bank);
+////            bankdao.getBankByName("UBS");
+//            bankdao.remove(bank);
+//        } catch (DAOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

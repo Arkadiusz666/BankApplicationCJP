@@ -1,5 +1,6 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.accounts;
 
+import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.exceptions.OverdraftLimitExceededException;
 import com.luxoft.CJP.April16.akrzos.bankapp.serialization.ParsingFeeds;
 
@@ -60,6 +61,8 @@ public abstract class AbstractAccount implements Account {
                 "balance=" + balance +
                 '}';
     }
+
+
 }
 
 

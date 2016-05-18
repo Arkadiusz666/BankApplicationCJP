@@ -15,7 +15,7 @@ public class BaseDAOImplementation implements BaseDAO {
     public Connection openConnection() throws DAOException {
         try {
             Class.forName("org.h2.Driver"); // this is driver for H2
-            conn = DriverManager.getConnection("jdbc:h2:~/ormTraining",
+            conn = DriverManager.getConnection("jdbc:h2:tcp://localhost:9092/~/ormTraining",
                     "sa", // login
                     "" // password
             );
@@ -28,6 +28,7 @@ public class BaseDAOImplementation implements BaseDAO {
 
     public void closeConnection() {
         try {
+            conn.commit();
             conn.close();
         } catch(SQLException e) {
             e.printStackTrace();

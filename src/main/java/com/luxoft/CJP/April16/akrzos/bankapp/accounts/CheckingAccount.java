@@ -24,6 +24,9 @@ public class CheckingAccount extends AbstractAccount {
 //        accountId=idCounter;
 //        idCounter++;
     }
+    public String getAccountType() {
+        return "C";
+    }
 
     public void setOverdraft(float overdraft) {
         this.overdraft = overdraft;

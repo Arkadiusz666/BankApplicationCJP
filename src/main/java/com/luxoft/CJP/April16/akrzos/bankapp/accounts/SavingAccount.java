@@ -13,6 +13,12 @@ public class SavingAccount extends AbstractAccount {
 //        accountId=idCounter;
 //        idCounter++;
     }
+    public String getAccountType() {
+        return "S";
+    }
+    public float getOverdraft() {
+        return 0;
+    }
 
 
 

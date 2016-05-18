@@ -13,7 +13,6 @@ import java.util.*;
  */
 public class Client implements ParsingFeeds, Serializable {
     private static final long serialVersionUID = 4020000988842999258L;
-//    private static int idCounter=0;
     private int clientId;
 
     private String name;
@@ -26,8 +25,6 @@ public class Client implements ParsingFeeds, Serializable {
     //constructors
     public Client() {
         accounts = new HashSet<Account>();
-//        clientId=idCounter;
-//        idCounter++;
     }
 
     public Client(Gender gender, String name, String city) {
@@ -42,8 +39,28 @@ public class Client implements ParsingFeeds, Serializable {
         //TODO email adress
     }
 
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+    public void setGender(String gender) {
+        if (gender.matches("m|M|male|Male|MALE")) {
+            this.setGender(Gender.MALE);
+        }
+        if (gender.matches("f|F|female|Female|FEMALE")) {
+            this.setGender(Gender.FEMALE);
+        }
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public void setClientId(int clientId) {
         this.clientId = clientId;
+    }
+
+    public int getClientId() {
+        return clientId;
     }
 
     public Gender getGender() {

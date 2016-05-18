@@ -30,6 +30,8 @@ ID INT AUTO_INCREMENT NOT NULL,
 NAME VARCHAR(255),
 PRIMARY KEY(ID)
 );
+-- BankApp BANKS table - fill with data
+INSERT INTO BANK VALUES(1, 'UBS');
 
 -- BankApp Clients table
 CREATE TABLE CLIENTS (
