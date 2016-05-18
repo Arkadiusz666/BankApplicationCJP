@@ -14,6 +14,7 @@ public interface Account extends Report {
     public void decimalValue();
     public String getAccountType();
     public float getOverdraft();
+    public void setAccountID(int id);
 }
 
 

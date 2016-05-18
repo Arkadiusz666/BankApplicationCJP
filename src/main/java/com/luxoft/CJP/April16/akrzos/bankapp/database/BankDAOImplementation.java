@@ -69,9 +69,8 @@ public class BankDAOImplementation extends BaseDAOImplementation implements Bank
             e.printStackTrace();
             throw new DAOException();
         } finally {
+            closeConnection();
         }
-        closeConnection();
-
     }
 
     public static void main(String[] args) {
@@ -91,23 +90,6 @@ public class BankDAOImplementation extends BaseDAOImplementation implements Bank
         } catch (DAOException e) {
             e.printStackTrace();
         }
-
-
-
-//        DBInitializer initializer = new DBInitializer();
-//        initializer.deinitialize();
-//        initializer.initialize();
-
-
-//        try {
-////            bankdao.getBankByName("UBS");
-//            bankdao.save(bank);
-//            bankdao.save(bank);
-////            bankdao.getBankByName("UBS");
-//            bankdao.remove(bank);
-//        } catch (DAOException e) {
-//            e.printStackTrace();
-//        }
     }
 
 }

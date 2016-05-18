@@ -2,6 +2,8 @@ package com.luxoft.CJP.April16.akrzos.bankapp.database;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
+import com.luxoft.CJP.April16.akrzos.bankapp.accounts.CheckingAccount;
+import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.BankNotFoundException;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.DAOException;
@@ -55,26 +57,36 @@ public class AccountDAOImplementation  extends BaseDAOImplementation implements 
     public List<Account> getClientAccounts(int idClient) throws DAOException {
         List<Account> accounts = new ArrayList<>();
 
-        Bank bank = new Bank(name);
-        String sql = "SELECT ACCOUNTS_ID,ACCOUNTS_TYPE, ACCOUNTS_BALANCE, ACCOUNTS_OVERDRAFT FROM ACCOUNTS WHERE ACCOUNTS_CLIENT_ID=?";
+//        Bank bank = new Bank(name);
+        String sql = "SELECT ACCOUNTS_ID,ACCOUNTS_TYPE, ACCOUNTS_BALANCE, ACCOUNTS_OVERDRAFT, ACCOUNTS_CLIENT_ID FROM ACCOUNTS WHERE ACCOUNTS_CLIENT_ID=" +idClient;
         PreparedStatement stmt;
         try {
             openConnection();
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                int id  = rs.getInt("ID");
-                bank.setBankId(id); //TODO
-            } else {
-                throw new BankNotFoundException();
+            while (rs.next()) {
+                String type = rs.getString("ACCOUNTS_CLIENT_ID");
+                Account account;
+                if (type.equals("s")) {
+                    int amount = rs.getInt("ACCOUNTS_BALANCE");
+                    account = new SavingAccount(amount);
+                } else
+//                if (type.equals("c"))
+                {
+                    int amount = rs.getInt("ACCOUNTS_BALANCE");
+                    int overdraft = rs.getInt("ACCOUNTS_OVERDRAFT");
+                    account = new CheckingAccount(amount, overdraft);
+                }
+                int id = rs.getInt("ACCOUNTS_ID");
+                account.setAccountID(id);
+                accounts.add(account);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DAOException();
         } finally {
             closeConnection();
         }
-        return bank;
+        return accounts;
     }
 }
