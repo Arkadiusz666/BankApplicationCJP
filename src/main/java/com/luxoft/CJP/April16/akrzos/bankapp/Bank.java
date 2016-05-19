@@ -25,7 +25,7 @@ public class Bank implements ParsingFeeds{
     private ClientRegistrationListener[] listeners = {new PrintClientListener(), new EmailNotificationListener(), new PrintClientListener()};
     private Map<String, Client> clientsByName;
 //    private static int idCounter=0;
-    private int bankId;
+    private int bankId = -1;
 
     public Bank(String name) {
         this.name=name;
@@ -40,6 +40,10 @@ public class Bank implements ParsingFeeds{
 
     public String getName() {
         return name;
+    }
+
+    public int getBankId() {
+        return bankId;
     }
 
     public void printReport() {

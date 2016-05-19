@@ -11,7 +11,7 @@ public abstract class AbstractAccount implements Account {
 //TODO implementign parseFeed
     private float balance;
 //    protected static int idCounter=1;
-    private int accountID;
+    private int accountID = -1;
 
     public AbstractAccount(float balance) {
         this.balance = balance;
@@ -19,7 +19,7 @@ public abstract class AbstractAccount implements Account {
 //        idCounter++;
     }
 
-    public void setAccountId(int accountID) {
+    public void setAccountID(int accountID) {
         this.accountID = accountID;
     }
 

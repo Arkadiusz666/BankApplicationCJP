@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class Client implements ParsingFeeds, Serializable {
     private static final long serialVersionUID = 4020000988842999258L;
-    private int clientId;
+    private int clientId = -1;
 
     private String name;
     private Set<Account> accounts; //TODO check equality of accounts and properties of the set
