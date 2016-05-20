@@ -1,12 +1,9 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.database;
 
-import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.CheckingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
-import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.BankNotFoundException;
-import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.ClientNotFoundException;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.DAOException;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.interfaces.AccountDAO;
 

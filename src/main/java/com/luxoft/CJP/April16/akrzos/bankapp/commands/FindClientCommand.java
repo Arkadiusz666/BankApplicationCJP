@@ -2,6 +2,7 @@ package com.luxoft.CJP.April16.akrzos.bankapp.commands;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
+import com.luxoft.CJP.April16.akrzos.bankapp.helpers.Helper;
 import com.luxoft.CJP.April16.akrzos.bankapp.services.BankServiceImplementation;
 import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
@@ -15,7 +16,11 @@ import java.util.Scanner;
 public class FindClientCommand implements Command {
 
     public void execute() {
-
+        if (BankCommander.currentBank==null) {
+            System.out.println("No bank selected!");
+            Helper.pressAnyKeyToContinue();
+            new SelectBankCommand().execute();
+        }
         Scanner scanner = new Scanner(System.in);
 
         printCommandInfo();
@@ -48,6 +53,7 @@ public class FindClientCommand implements Command {
             BankCommander.currentClient=foundClientList.get(temp);
             System.out.println("Current client set: " + foundClientList.get(temp));
         }
+        Helper.pressAnyKeyToContinue();
     }
 
     public void printCommandInfo() {

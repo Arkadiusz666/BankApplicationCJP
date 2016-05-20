@@ -54,7 +54,7 @@ public class ClientDAOImplementation extends BaseDAOImplementation implements Cl
     public List<Client> getAllClients(Bank bank) throws DAOException {
         List<Client> clients = new ArrayList<>();
 
-        String sql = "SELECT * FROM CLIENTS WHERE CLIENTS_BANK_ID=" +bank.getBankId();
+        String sql = "SELECT * FROM CLIENTS WHERE CLIENTS_BANKS_ID=" +bank.getBankId();
         PreparedStatement stmt;
         try {
             openConnection();

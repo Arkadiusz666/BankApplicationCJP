@@ -1,8 +1,10 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.commands;
 
+import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -54,4 +56,23 @@ public class HelperCommand {
         }
         return tempClient;
     }
+    public Bank chooseBank(ArrayList<Bank> list) {
+        Scanner scanner = new Scanner(System.in);
+
+        if (list.size()==0) {
+            System.out.println("No items to choose from");
+            return null;
+        } else {
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println(i+ ") " +list.get(i).getName());
+            }
+        }
+        int chosen = -1;
+        while (chosen<0||chosen>=list.size()) {
+            System.out.println("Choose one: ");
+            chosen=scanner.nextInt();
+        }
+        return list.get(chosen);
+    }
+
 }

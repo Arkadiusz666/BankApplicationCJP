@@ -26,69 +26,59 @@ class BankCommander {
         commandsMap.put("Deposit funds", new DepositCommand());
         commandsMap.put("Transfer funds", new TransferCommand());
         commandsMap.put("Withdraw funds", new WithdrawCommand());
+        commandsMap.put("Select bank", new SelectBankCommand());
         commandsMap.put("Reporting", new BankReport());
+        commandsMap.put("Delete active user", new DeleteActiveUserCommand());
         commandsMap.put("Exit", new ExitCommand());
     }
-
-//    static Command[] commands = {
-//            ,
-//            new GetAccountsCommand(),
-//            new AddClientCommand(),
-//            new DepositCommand(),
-//            new TransferCommand(),
-//            new WithdrawCommand(),
-//            new BankReport(),
+//REDUNDANT SINCE INTRODUCTION OF DATABASES
+//    public void initialize() {
+//        currentBank = new Bank("UBS");
+//
+//        BankServiceImplementation service = new BankServiceImplementation();
+//
+//        CheckingAccount account1 = new CheckingAccount(10000, 100);
+//        CheckingAccount account2 = new CheckingAccount(299, 200);
+//        CheckingAccount account3 = new CheckingAccount(144444);
+//        SavingAccount account11 = new SavingAccount(131321);
+//        CheckingAccount account12 = new CheckingAccount(-999, 1000);
+//
+//        Client client1 = new Client(Gender.MALE, "Arek Krzos", "Krakow");
+//        Client client2 = new Client(Gender.MALE, "Roman Gabrys", "Krakow");
+//        Client client3 = new Client(Gender.FEMALE, "Janina Nowak", "Oswiecim");
+//        Client client4 = new Client(Gender.FEMALE, "Janina Ptak", "Oswiecim");
+//        Client client5 = new Client(Gender.FEMALE, "Janina Szpak", "Skala");
+//
+//        service.addAccount(currentBank, client1,account1);
+//        service.addAccount(currentBank, client1,account11);
+//        service.addAccount(currentBank, client1,account12);
+//        service.addAccount(currentBank, client2,account2);
+//        service.addAccount(currentBank, client3,account3);
+//
+//        service.addClient(currentBank, client1);
+//        service.addClient(currentBank, client2);
+//        service.addClient(currentBank, client3);
+//        service.addClient(currentBank, client4);
+//        service.addClient(currentBank, client5);
 //
 //
-//            new Command() {
-//                public void execute() {
-//                    System.exit(0);
-//                }
-//                public void printCommandInfo() {
-//                    System.out.println("Exit");
-//                }
-//            }
-//    };
-    public void initialize() {
-        currentBank = new Bank("UBS");
-
-        BankServiceImplementation service = new BankServiceImplementation();
-
-        CheckingAccount account1 = new CheckingAccount(10000, 100);
-        CheckingAccount account2 = new CheckingAccount(299, 200);
-        CheckingAccount account3 = new CheckingAccount(144444);
-        SavingAccount account11 = new SavingAccount(131321);
-        CheckingAccount account12 = new CheckingAccount(-999, 1000);
-
-        Client client1 = new Client(Gender.MALE, "Arek Krzos", "Krakow");
-        Client client2 = new Client(Gender.MALE, "Roman Gabrys", "Krakow");
-        Client client3 = new Client(Gender.FEMALE, "Janina Nowak", "Oswiecim");
-        Client client4 = new Client(Gender.FEMALE, "Janina Ptak", "Oswiecim");
-        Client client5 = new Client(Gender.FEMALE, "Janina Szpak", "Skala");
-
-        service.addAccount(currentBank, client1,account1);
-        service.addAccount(currentBank, client1,account11);
-        service.addAccount(currentBank, client1,account12);
-        service.addAccount(currentBank, client2,account2);
-        service.addAccount(currentBank, client3,account3);
-
-        service.addClient(currentBank, client1);
-        service.addClient(currentBank, client2);
-        service.addClient(currentBank, client3);
-        service.addClient(currentBank, client4);
-        service.addClient(currentBank, client5);
-
-
-    }
+//    }
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-
-
         while (true) {
             System.out.print("Active client: ");
             if (currentClient==null) {
                 System.out.println("no client selected");
-            } else System.out.println(currentClient.toString());
+            } else {
+                System.out.println(currentClient.toString());
+            }
+
+            System.out.print("Active bank: ");
+            if (currentBank==null) {
+                System.out.println("no bank selected");
+            } else {
+                System.out.println(currentBank.getName());
+            }
             System.out.println("----------------------------");
             for (String s : commandsMap.keySet()) {
                 System.out.println("-" + s);
@@ -119,7 +109,6 @@ class BankCommander {
 
     public static void main(String args[]) {
         BankCommander start = new BankCommander();
-        start.initialize();
         start.execute();
 
     }
