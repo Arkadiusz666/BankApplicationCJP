@@ -2,6 +2,7 @@ package com.luxoft.CJP.April16.akrzos.bankapp.accounts;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.AccountDAOImplementation;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.interfaces.AccountDAO;
 import com.luxoft.CJP.April16.akrzos.bankapp.exceptions.OverdraftLimitExceededException;
 import com.luxoft.CJP.April16.akrzos.bankapp.serialization.ParsingFeeds;
 
@@ -37,6 +38,8 @@ public abstract class AbstractAccount implements Account {
     public void deposit(float amount) {
         if (amount>0) {
             balance = balance + amount;
+            AccountDAOImplementation accountDAOImplementation = new AccountDAOImplementation();
+            accountDAOImplementation.update(this);
         } else
             System.out.println("Unable to deposit negative amount");
     }
@@ -49,6 +52,8 @@ public abstract class AbstractAccount implements Account {
             balance = balance - amount;
             System.out.println("Amount " + amount + " withdrawn");
             System.out.println("Current balance: " +  balance);
+            AccountDAOImplementation accountDAOImplementation = new AccountDAOImplementation();
+            accountDAOImplementation.update(this);
         }
     }
 

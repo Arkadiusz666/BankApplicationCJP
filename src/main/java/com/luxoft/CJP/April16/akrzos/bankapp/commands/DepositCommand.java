@@ -11,10 +11,7 @@ import java.util.Scanner;
  */
 public class DepositCommand implements Command {
 
-
     public void execute() {
-
-        Scanner scanner = new Scanner(System.in);
         HelperCommand helper = new HelperCommand();
         Account tempAccount;
         printCommandInfo();
@@ -28,10 +25,12 @@ public class DepositCommand implements Command {
             } else {
 
                 tempAccount = helper.chooseAccount(BankCommander.currentClient.getAccounts());
-                int tempAmount=0;
+                float tempAmount=0;
                 while (tempAmount<=0) {
                     System.out.println("Provide positive amount to deposit:");
-                    tempAmount = scanner.nextInt();
+                    Scanner scanner = new Scanner(System.in);
+
+                    tempAmount = scanner.nextFloat();
                 }
                 tempAccount.deposit(tempAmount);
 

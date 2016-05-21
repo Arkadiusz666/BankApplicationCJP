@@ -14,7 +14,6 @@ import java.util.Set;
 public class HelperCommand {
     private int counter;
     private int chosen;
-    Scanner scanner = new Scanner(System.in);
     // TODO assuming set is not empty - check if validation in place
     public Account chooseAccount(Set<Account> set) {
         counter=0;
@@ -24,8 +23,10 @@ public class HelperCommand {
             System.out.println(counter+") "+account);
             counter++;
         }
+        chosen = -1;
         while (chosen<0||chosen>=counter) {
             System.out.println("Choose an account: ");
+            Scanner scanner = new Scanner(System.in);
             chosen=scanner.nextInt();
         }
         counter=0;
@@ -33,7 +34,9 @@ public class HelperCommand {
             if (chosen==counter) {
                 tempAccount=account;
             }
+            counter++;
         }
+        System.out.println(tempAccount+ "Chosen (delete this)");
         return tempAccount;
     }
     public Client chooseClient(Set<Client> set) {
@@ -44,14 +47,18 @@ public class HelperCommand {
             System.out.println(counter+") "+client.getGender().getSalutation() + " " + client.getName());
             counter++;
         }
+        chosen = -1;
         while (chosen<0||chosen>=counter) {
             System.out.println("Choose a client: ");
+            Scanner scanner = new Scanner(System.in);
+            scanner.nextLine();
             chosen=scanner.nextInt();
         }
         counter=0;
         for (Client client : set) {
             if (chosen==counter) {
                 tempClient=client;
+                counter++;
             }
         }
         return tempClient;

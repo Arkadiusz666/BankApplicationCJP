@@ -6,6 +6,7 @@ import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.DAOException;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.interfaces.AccountDAO;
+import com.luxoft.CJP.April16.akrzos.bankapp.helpers.Helper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,6 +44,8 @@ public class AccountDAOImplementation  extends BaseDAOImplementation implements 
                 ", ACCOUNTS_OVERDRAFT=" + account.getOverdraft() +
                 " WHERE ACCOUNTS_ID=" + account.getAccountID()+
                 "";
+        DBInitializer init = new DBInitializer();
+        init.sqlQueryExecutor(sql);
     }
 
     @Override

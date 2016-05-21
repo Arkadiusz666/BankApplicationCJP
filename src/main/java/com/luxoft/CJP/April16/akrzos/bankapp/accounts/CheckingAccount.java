@@ -1,6 +1,7 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.accounts;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.AbstractAccount;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.AccountDAOImplementation;
 import com.luxoft.CJP.April16.akrzos.bankapp.exceptions.OverdraftLimitExceededException;
 
 /**
@@ -47,6 +48,8 @@ public class CheckingAccount extends AbstractAccount {
         } else
         {
             super.withdraw(amount);
+            AccountDAOImplementation accountDAOImplementation = new AccountDAOImplementation();
+            accountDAOImplementation.update(this);
             System.out.println("");
         }
     }

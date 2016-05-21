@@ -5,6 +5,14 @@ import com.luxoft.CJP.April16.akrzos.bankapp.accounts.CheckingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Gender;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.AccountDAOImplementation;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.BankDAOImplementation;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.ClientDAOImplementation;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.DBInitializer;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.BankNotFoundException;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.ClientNotFoundException;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.DAOException;
+import com.luxoft.CJP.April16.akrzos.bankapp.helpers.Helper;
 import com.luxoft.CJP.April16.akrzos.bankapp.services.BankServiceImplementation;
 
 import java.util.Map;
@@ -108,6 +116,27 @@ class BankCommander {
     }
 
     public static void main(String args[]) {
+        BankDAOImplementation bankDAO = new BankDAOImplementation();
+        AccountDAOImplementation accountDAO= new AccountDAOImplementation();
+        ClientDAOImplementation clientDAO = new ClientDAOImplementation();
+
+        Bank bank = Helper.generateBank();
+        DBInitializer dbInitializer = new DBInitializer();
+        dbInitializer.deinitialize();
+        dbInitializer.initialize();
+        dbInitializer.fill(bank);
+
+        try {
+            BankCommander.currentBank = bankDAO.getBankByNameWithContent("UBS");
+            BankCommander.currentClient = clientDAO.findClientByName(currentBank ,"Arek Krzos");
+        } catch (BankNotFoundException e) {
+            e.printStackTrace();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } catch (ClientNotFoundException e) {
+            e.printStackTrace();
+        }
+
         BankCommander start = new BankCommander();
         start.execute();
 

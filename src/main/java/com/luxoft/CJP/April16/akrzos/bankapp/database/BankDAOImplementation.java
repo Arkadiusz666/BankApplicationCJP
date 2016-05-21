@@ -123,36 +123,4 @@ public class BankDAOImplementation extends BaseDAOImplementation implements Bank
         }
     }
 
-    public static void main(String[] args) {
-        BankDAOImplementation bankDAO = new BankDAOImplementation();
-        AccountDAOImplementation accountDAO= new AccountDAOImplementation();
-        ClientDAOImplementation clientDAO = new ClientDAOImplementation();
-
-        Bank bank = Helper.generateBank();
-        DBInitializer dbInitializer = new DBInitializer();
-        dbInitializer.deinitialize();
-        dbInitializer.initialize();
-        dbInitializer.fill(bank);
-
-        try {
-            Client client1= clientDAO.findClientByName(bank, "Arek Krzos");
-            clientDAO.remove(client1);
-            accountDAO.removeByClientId(2);
-        } catch (DAOException e) {
-            e.printStackTrace();
-        } catch (ClientNotFoundException e) {
-            e.printStackTrace();
-        }
-
-//        try {
-//            for (Account account : accountdao.getClientAccounts(0)) {
-//                System.out.println(account);
-//            }
-//        } catch (DAOException e) {
-//            e.printStackTrace();
-//        }
-
-
-    }
-
 }
