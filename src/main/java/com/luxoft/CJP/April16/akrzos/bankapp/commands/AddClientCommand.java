@@ -70,7 +70,7 @@ public class AddClientCommand implements Command {
     }
 
     public void printCommandInfo() {
-        System.out.println("Add Client - Allows adding a client to the system");
+        System.out.println("Add Client -Allows adding a client to the system");
     }
 }
 
