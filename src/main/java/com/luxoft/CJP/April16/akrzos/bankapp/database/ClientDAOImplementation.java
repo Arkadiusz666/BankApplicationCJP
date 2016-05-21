@@ -1,6 +1,7 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.database;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
+import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Gender;
 import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.ClientNotFoundException;
@@ -47,6 +48,10 @@ public class ClientDAOImplementation extends BaseDAOImplementation implements Cl
         } finally {
             closeConnection();
         }
+        for (Account account : new AccountDAOImplementation().getClientAccounts(client.getClientId())) {
+            client.addAccount(account);
+        }
+
         return client;
     }
 
@@ -110,6 +115,10 @@ public class ClientDAOImplementation extends BaseDAOImplementation implements Cl
             client.setClientId(findClientByName(bank, client.getName()).getClientId());
         } catch (ClientNotFoundException e) {
             e.printStackTrace();
+        }
+        AccountDAOImplementation accountDAO = new AccountDAOImplementation();
+        for (Account account : client.getAccounts()) { //TODO test
+            accountDAO.save(account, client);
         }
     }
 

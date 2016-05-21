@@ -140,7 +140,6 @@ class BankCommander {
 
         BankCommander start = new BankCommander();
         start.execute();
-
     }
 }
 

@@ -1,6 +1,7 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.commands;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
+import com.luxoft.CJP.April16.akrzos.bankapp.accounts.CheckingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Gender;
@@ -46,18 +47,22 @@ public class AddClientCommand implements Command {
                 break;
             } else System.out.println("Incorrect input, try again (M of F)");
         }
-        System.out.println("Initial overdraft:");
-        tempInitialOverdraft=scanner.nextFloat();
+//        System.out.println("Initial overdraft:");
+//        scanner.nextLine(); //TODO does not work!!!! (because init overdraft is not saved in db)
+//        tempInitialOverdraft=scanner.nextInt();
 
         System.out.println("City:");
+        scanner.nextLine(); //TODO check if working
         tempCity=scanner.nextLine(); //TODO check if working
         Client tempClient = new Client(tempGender, tempName, tempCity);
-        tempClient.setInitialOverdraft(tempInitialOverdraft);
+//        tempClient.setInitialOverdraft(tempInitialOverdraft);
+        tempClient.addAccount(new CheckingAccount(0,tempClient.getInitialOverdraft()));
+        tempClient.addAccount(new SavingAccount(0));
 
         BankCommander.currentBank.addClient(tempClient);
-        BankCommander.currentClient=tempClient;
-        BankCommander.currentClient.addAccount(new SavingAccount(0));//TODO it adds abstract???
+//        BankCommander.currentClient.addAccount(new SavingAccount(0));//TODO it adds abstract???
         System.out.println("New user successfully created:");
+
         ClientDAOImplementation clientDAO = new ClientDAOImplementation();
         try {
             clientDAO.save(tempClient, BankCommander.currentBank);
@@ -65,6 +70,7 @@ public class AddClientCommand implements Command {
         } catch (DAOException | ClientNotFoundException e) {
             e.printStackTrace();
         }
+
         System.out.println(tempClient.toString());
         System.out.println(BankCommander.currentBank.getClients().toString());
     }

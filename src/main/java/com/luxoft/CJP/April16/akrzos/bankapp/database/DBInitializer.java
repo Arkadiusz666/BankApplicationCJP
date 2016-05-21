@@ -62,9 +62,10 @@ public class DBInitializer extends BaseDAOImplementation{
             bankDAO.save(bank);
             for (Client client : bank.getClients()) {
                 clientDAO.save(client,bank);
-                for (Account account : client.getAccounts()) {
-                    accountDAO.save(account,client);
-                }
+                //this part is obsolote due to change in saving client (includes accounts now)
+//                for (Account account : client.getAccounts()) {
+//                    accountDAO.save(account,client);
+//                }
             }
 
 
