@@ -37,6 +37,7 @@ class BankCommander {
         commandsMap.put("Select bank", new SelectBankCommand());
         commandsMap.put("Reporting", new BankReport());
         commandsMap.put("Delete active user", new DeleteActiveUserCommand());
+        commandsMap.put("Add new client", new AddClientCommand());
         commandsMap.put("Exit", new ExitCommand());
     }
 //REDUNDANT SINCE INTRODUCTION OF DATABASES
@@ -126,16 +127,16 @@ class BankCommander {
         dbInitializer.initialize();
         dbInitializer.fill(bank);
 
-        try {
-            BankCommander.currentBank = bankDAO.getBankByNameWithContent("UBS");
-            BankCommander.currentClient = clientDAO.findClientByName(currentBank ,"Arek Krzos");
-        } catch (BankNotFoundException e) {
-            e.printStackTrace();
-        } catch (DAOException e) {
-            e.printStackTrace();
-        } catch (ClientNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            BankCommander.currentBank = bankDAO.getBankByNameWithContent("UBS");
+//            BankCommander.currentClient = clientDAO.findClientByName(currentBank ,"Arek Krzos");
+//        } catch (BankNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (DAOException e) {
+//            e.printStackTrace();
+//        } catch (ClientNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
         BankCommander start = new BankCommander();
         start.execute();

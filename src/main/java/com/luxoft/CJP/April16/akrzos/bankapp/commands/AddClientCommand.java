@@ -4,6 +4,9 @@ import com.luxoft.CJP.April16.akrzos.bankapp.Bank;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Gender;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.ClientDAOImplementation;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.ClientNotFoundException;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.dbexceptions.DAOException;
 import com.luxoft.CJP.April16.akrzos.bankapp.services.BankService;
 import com.luxoft.CJP.April16.akrzos.bankapp.services.BankServiceImplementation;
 
@@ -20,6 +23,10 @@ public class AddClientCommand implements Command {
     String temp;
 
     public void execute() {
+        if (BankCommander.currentBank==null) {
+            System.out.println("No banks selected!");
+            new SelectBankCommand().execute();
+        }
         Scanner scanner = new Scanner(System.in);
 
         printCommandInfo();
@@ -51,6 +58,13 @@ public class AddClientCommand implements Command {
         BankCommander.currentClient=tempClient;
         BankCommander.currentClient.addAccount(new SavingAccount(0));//TODO it adds abstract???
         System.out.println("New user successfully created:");
+        ClientDAOImplementation clientDAO = new ClientDAOImplementation();
+        try {
+            clientDAO.save(tempClient, BankCommander.currentBank);
+            BankCommander.currentClient = clientDAO.findClientByName(BankCommander.currentBank, tempClient.getName());
+        } catch (DAOException | ClientNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println(tempClient.toString());
         System.out.println(BankCommander.currentBank.getClients().toString());
     }
