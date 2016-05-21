@@ -1,6 +1,7 @@
 package com.luxoft.CJP.April16.akrzos.bankapp.accounts;
 
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.AccountDAOImplementation;
 import com.luxoft.CJP.April16.akrzos.bankapp.exceptions.OverdraftLimitExceededException;
 import com.luxoft.CJP.April16.akrzos.bankapp.serialization.ParsingFeeds;
 
@@ -17,6 +18,10 @@ public abstract class AbstractAccount implements Account {
         this.balance = balance;
 //        accountId=idCounter;
 //        idCounter++;
+    }
+
+    public int getAccountID() {
+        return accountID;
     }
 
     public void setAccountID(int accountID) {

@@ -38,6 +38,12 @@ public class AccountDAOImplementation  extends BaseDAOImplementation implements 
             closeConnection();
         }
     }
+    public void update(Account account) {
+        String sql = "UPDATE ACCOUNTS SET ACCOUNTS_BALANCE=" + account.getBalance()+
+                ", ACCOUNTS_OVERDRAFT=" + account.getOverdraft() +
+                " WHERE ACCOUNTS_ID=" + account.getAccountID()+
+                "";
+    }
 
     @Override
     public void add(Account account) throws DAOException {
