@@ -6,6 +6,7 @@ package com.luxoft.CJP.April16.akrzos.bankapp;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Client;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Gender;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.annotation.NoDB;
 import com.luxoft.CJP.April16.akrzos.bankapp.exceptions.OverdraftLimitExceededException;
 import com.luxoft.CJP.April16.akrzos.bankapp.listeners.ClientRegistrationListener;
 import com.luxoft.CJP.April16.akrzos.bankapp.listeners.EmailNotificationListener;
@@ -22,8 +23,8 @@ public class Bank implements ParsingFeeds{
     private String name;
 //    private List<Client> clients; //deprecated in EX5
     private Set<Client> clients;
-    private ClientRegistrationListener[] listeners = {new PrintClientListener(), new EmailNotificationListener(), new PrintClientListener()};
-    private Map<String, Client> clientsByName;
+    @NoDB private ClientRegistrationListener[] listeners = {new PrintClientListener(), new EmailNotificationListener(), new PrintClientListener()};
+    @NoDB private Map<String, Client> clientsByName;
 //    private static int idCounter=0;
     private int bankId = -1;
 

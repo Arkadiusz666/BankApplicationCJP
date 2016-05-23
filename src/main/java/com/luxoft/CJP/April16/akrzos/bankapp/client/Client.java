@@ -3,6 +3,7 @@ import com.luxoft.CJP.April16.akrzos.bankapp.accounts.Account;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.CheckingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.accounts.SavingAccount;
 import com.luxoft.CJP.April16.akrzos.bankapp.client.Gender;
+import com.luxoft.CJP.April16.akrzos.bankapp.database.annotation.NoDB;
 import com.luxoft.CJP.April16.akrzos.bankapp.serialization.ParsingFeeds;
 
 import java.io.Serializable;
@@ -16,9 +17,10 @@ public class Client implements ParsingFeeds, Serializable {
     private int clientId = -1;
 
     private String name;
+    @NoDB
     private Set<Account> accounts; //TODO check equality of accounts and properties of the set
     private Account activeAccount;
-    private float initialOverdraft;
+    @NoDB private float initialOverdraft;
     private Gender gender;
     private String city;
 
