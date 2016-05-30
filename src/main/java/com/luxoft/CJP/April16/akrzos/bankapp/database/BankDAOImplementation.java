@@ -107,6 +107,18 @@ public class BankDAOImplementation extends BaseDAOImplementation implements Bank
         }
     }
 
+    public void saveWithContent(Bank bank) {
+        try {
+            save(bank);
+            ClientDAOImplementation clientDAOImplementation = new ClientDAOImplementation();
+            for (Client client : bank.getClients()) {
+                clientDAOImplementation.save(client, bank);
+            }
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void remove(Bank bank) throws DAOException {
         String sql = "DELETE FROM BANKS WHERE BANKS_ID=?";
         PreparedStatement stmt;
