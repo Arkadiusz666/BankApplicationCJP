@@ -10,6 +10,8 @@ import java.util.Objects;
  * Created by arkad_000 on 2016-05-29.
  */
 public class TestService {
+    //TODO to be reviewed
+
     public static boolean isEqualsExceptForFieldsMarkedasNoDB (Object o1, Object o2) {
         Field[] fields1 = o1.getClass().getDeclaredFields();
 
