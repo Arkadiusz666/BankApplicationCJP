@@ -25,6 +25,9 @@ public class BankDAOImplementationTest {
     public void initializeBanksForTesting() {
         bank1 = Helper.generateBank();
         bank2 = Helper.generateBank();
+        DBInitializer initializer = new DBInitializer();
+        initializer.deinitialize();
+        initializer.initialize();
     }
 
     @Test

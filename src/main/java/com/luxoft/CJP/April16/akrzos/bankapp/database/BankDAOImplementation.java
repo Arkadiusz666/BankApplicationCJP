@@ -108,15 +108,29 @@ public class BankDAOImplementation extends BaseDAOImplementation implements Bank
     }
 
     public void saveWithContent(Bank bank) {
-        try {
-            save(bank);
-            ClientDAOImplementation clientDAOImplementation = new ClientDAOImplementation();
-            for (Client client : bank.getClients()) {
-                clientDAOImplementation.save(client, bank);
+        if (bank.getBankId()<0) {
+            try {
+                save(bank);
+            } catch (DAOException e) {
+                e.printStackTrace();
             }
-        } catch (DAOException e) {
-            e.printStackTrace();
+        } else {
+            update(bank);
         }
+
+        ClientDAOImplementation clientDAOImplementation = new ClientDAOImplementation();
+        for (Client client : bank.getClients()) {
+            clientDAOImplementation.saveOrUpdate(client, bank);
+        }
+
+    }
+
+    private void update(Bank bank) {
+        DBInitializer initializer = new DBInitializer();
+        String sql = "UPDATE BANKS SET BANKS_NAME=" +bank.getName() +
+                " WHERE BANKS_ID=" + bank.getBankId();
+        initializer.sqlQueryExecutor(sql);
+        //todo test
     }
 
     public void remove(Bank bank) throws DAOException {

@@ -88,6 +88,8 @@ public class ClientDAOImplementation extends BaseDAOImplementation implements Cl
     @Override
     public void save(Client client, Bank bank) throws DAOException {
         //TODO UPDATE OR INSERT - BASE ON ID
+
+
         String sql = "INSERT INTO CLIENTS (CLIENTS_NAME, CLIENTS_GENDER, CLIENTS_CITY, CLIENTS_BANKS_ID) \n" +
                 "\tVALUES (?,?,?,?);";
         PreparedStatement stmt;
@@ -96,11 +98,8 @@ public class ClientDAOImplementation extends BaseDAOImplementation implements Cl
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, client.getName());
-            if (client.getGender().equals(Gender.MALE)) {
-                stmt.setString(2, "M");
-            } else {
-                stmt.setString(2, "F");
-            }
+            stmt.setString(2, client.getGenderLetter());
+
             stmt.setString(3, client.getCity());
             stmt.setInt(4, bank.getBankId());
 
@@ -119,6 +118,25 @@ public class ClientDAOImplementation extends BaseDAOImplementation implements Cl
         AccountDAOImplementation accountDAO = new AccountDAOImplementation();
         for (Account account : client.getAccounts()) { //TODO test
             accountDAO.save(account, client);
+        }
+    }
+
+    public void saveOrUpdate(Client client, Bank bank) {
+        if (client.getClientId()<0) {
+            try {
+                save(client, bank);
+            } catch (DAOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            String sql = "UPDATE CLIENTS SET CLIENTS_NAME=" +client.getName() +
+                    " ,CLIENTS_GENDER=" +client.getGenderLetter()+
+                    " ,CLIENTS_CITY=" +client.getCity()+
+                    " ,CLIENTS_BANK=" +bank.getBankId()+
+                    "WHERE CLIENTS_ID=" +client.getClientId();
+
+            DBInitializer initializer = new DBInitializer();
+            initializer.sqlQueryExecutor(sql);
         }
     }
 

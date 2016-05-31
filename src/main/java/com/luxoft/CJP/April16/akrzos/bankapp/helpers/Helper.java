@@ -18,6 +18,7 @@ import java.util.*;
         try {
             System.in.read();
         } catch (Exception e) {
+
         }
     }
 

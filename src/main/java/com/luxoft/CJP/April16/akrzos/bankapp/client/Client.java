@@ -172,6 +172,14 @@ public class Client implements ParsingFeeds, Serializable {
         }
         //TODO calling parse account seems to be making no sense at this point
     }
+
+    public String getGenderLetter() {
+        if (gender.equals(Gender.MALE)) {
+            return "M";
+        } else {
+            return "F";
+        }
+    }
 }
 
 
